@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+  <!-- Link the CSS bruh-->
+<link href="tran.css" rel="stylesheet" type="text/css" />
+<div class = "body">
+<body>
+  <!-- THe thing div id for time and date-->
+    <div style='text-align: right'><div id="time"></div></div>
+    <!-- The Logo-->
+    <div class = "title"><img src="logo.png" alt="Payton Logo">WPCP Transit Info Display </div><center>Provided by John C. Falciglia</center> <hr>
+    <div class = "header">Transit Alerts:</div>
+    <!-- The id and class for any major CTA wide transit alerts that are really bad-->
+    <div class ='panic'><div id ="panix"></div></div>
+    <!-- In line JS cause im like that-->
+    <script>
+      // updates the time to the time id
+    function updateTime() { 
+        const now = new Date();
+        const timeString = now.toLocaleTimeString();
+        const dates = now.toDateString();
+        document.getElementById('time').innerText = timeString+" "+dates; } 
+    setInterval(updateTime, 1000); 
+// proxy to get around cors protocal, it cool fr fr
+const proxyUrl = 'https://corsproxy.io/?key=98122491&url=';
+const targetUrl = 'https://www.transitchicago.com/api/1.0/routes.aspx?routeid=red&outputType=JSON';
+// get the redline time
+function redlinetime(){
+const proxyUrl = 'https://corsproxy.io/?key=98122491&url=';
+fetch(proxyUrl + encodeURIComponent('https://freshbeets.dev/api/transit'))
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => { 
+    const incoming = data[0].ctatt.eta; 
+    const allRedDiv = document.getElementById('Allred'); 
+    allRedDiv.innerHTML = '';
+    const allRedHDiv = document.getElementById('How'); 
+    allRedHDiv.innerHTML = '';
+    incoming.forEach(thing => {
+        const currentTime = new Date();
+        const arrival = new Date(thing.arrT);
+        // Before I learned dates i parsed the string manually
+        //const arrival = parseInt(thing.arrT.toString().slice(14,16),10)+parseInt(thing.arrT.toString().slice(11,13),10)*60
+        const currentMinutes = currentTime.getHours() * 60 + currentTime.getMinutes();
+        const timeDifference = Math.round((arrival - currentTime) / 60000);
+        const trainInfo = `${thing.destNm} Bound-----Due in ${timeDifference} minutes`;
+        const trainInfoElement = document.createElement('div'); 
+        trainInfoElement.innerText = trainInfo;
+        if(thing.destNm=='Howard'){
+            allRedHDiv.appendChild(trainInfoElement);
+        } else{
+            allRedDiv.appendChild(trainInfoElement);
+        }
+    })
+})
+  .catch(error => console.error('Error fetching data:', error));
+}
+// Pings every ten seconds, edit the second num plz
+redlinetime()
+setInterval(redlinetime, 1000*60); 
+// brown line time
+function brnlinetime(){
+
+fetch(proxyUrl + encodeURIComponent('https://freshbeets.dev/api/transit'))
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => { 
+    const incoming = data[1].ctatt.eta; 
+    const loopDiv = document.getElementById('Looop'); 
+    loopDiv.innerHTML = '';
+    const kimDiv = document.getElementById('Kim'); 
+    kimDiv.innerHTML = '';
+    incoming.forEach(thing => {
+        const currentTime = new Date();
+        const arrival = new Date(thing.arrT);
+        //const arrival = parseInt(thing.arrT.toString().slice(14,16),10)+parseInt(thing.arrT.toString().slice(11,13),10)*60
+        const currentMinutes = currentTime.getHours() * 60 + currentTime.getMinutes();
+        const timeDifference = Math.round((arrival - currentTime) / 60000);
+        const trainInfo = `${thing.destNm} Bound-----Due in ${timeDifference} minutes`;
+        const trainInfoElement = document.createElement('div'); 
+        trainInfoElement.innerText = trainInfo;
+        if(thing.destNm=='Kimball'){
+            kimDiv.appendChild(trainInfoElement);
+        } else if(thing.destNm=='Loop'){
+            loopDiv.appendChild(trainInfoElement);
+        }
+    })
+})
+  .catch(error => console.error('Error fetching data:', error));
+}
+brnlinetime()
+setInterval(brnlinetime, 1000*60); 
+
+// Sus date is a function that I made that parses the date format for buses, becuases it isn't in a traditional format that JS uses
+function SusDate(dateString) {
+    const year = parseInt(dateString.slice(0, 4));
+    const month = parseInt(dateString.slice(4, 6)) - 1; 
+    const day = parseInt(dateString.slice(6, 8));
+    const hour = parseInt(dateString.slice(9, 11));
+    const minute = parseInt(dateString.slice(12, 14));
+    return new Date(year, month, day, hour, minute);
+}
+// 70 bus
+function bus70time(){
+const proxyUrl = 'https://corsproxy.io/?key=98122491&url=';
+/* TO THE HOOOOOOOOD */
+// Each bus has its own individual page, they aren't both in the same page lik the trains
+fetch(proxyUrl + encodeURIComponent('https://freshbeets.dev/api/transit'))
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => { 
+    const incoming = data[2]['bustime-response'].prd; 
+    const hoodDiv = document.getElementById('hood'); 
+    hoodDiv.innerHTML = '';
+    incoming.forEach(thing => {
+        const currentTime = new Date();
+        const arrival = SusDate(thing.prdtm);
+        //const arrival = parseInt(thing.arrT.toString().slice(14,16),10)+parseInt(thing.arrT.toString().slice(11,13),10)*60
+        const currentMinutes = currentTime.getHours() * 60 + currentTime.getMinutes();
+        const timeDifference = Math.round((arrival - currentTime) / 60000);
+        const busInfo = `Westbound-----Due in ${timeDifference} minutes`;
+        const busInfoElement = document.createElement('div'); 
+        busInfoElement.innerText = busInfo;
+        hoodDiv.appendChild(busInfoElement);
+    })
+})
+  .catch(error => console.error('Error fetching data:', error));
+
+
+  /* TO ZA WATA*/
+  // Other one, this is the api for the going east
+  fetch(proxyUrl + encodeURIComponent('https://freshbeets.dev/api/transit'))
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => { 
+    const incoming = data[14]['bustime-response'].prd; 
+    const wataDiv = document.getElementById('water'); 
+    wataDiv.innerHTML = '';
+    incoming.forEach(thing => {
+        const currentTime = new Date();
+        const arrival = SusDate(thing.prdtm);
+        //const arrival = parseInt(thing.arrT.toString().slice(14,16),10)+parseInt(thing.arrT.toString().slice(11,13),10)*60
+        const currentMinutes = currentTime.getHours() * 60 + currentTime.getMinutes();
+        const timeDifference = Math.round((arrival - currentTime) / 60000);
+        const busInfo = `Eastbound-----Due in ${timeDifference} minutes`;
+        const busInfoElement = document.createElement('div'); 
+        busInfoElement.innerText = busInfo;
+        wataDiv.appendChild(busInfoElement);
+    })
+})
+  .catch(error => console.error('Error fetching data:', error));
+}
+bus70time()
+setInterval(bus70time, 1000*60); 
+//22 clark bus
+function bus22time(){
+const proxyUrl = 'https://corsproxy.io/?key=98122491&url=';
+/* TO KingV */
+// api for southbound
+fetch(proxyUrl + encodeURIComponent('https://freshbeets.dev/api/transit'))
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => { 
+    const incoming = data[3]['bustime-response'].prd; 
+    const kingDiv = document.getElementById('kingV'); 
+    kingDiv.innerHTML = '';
+    incoming.forEach(thing => {
+        const currentTime = new Date();
+        const arrival = SusDate(thing.prdtm);
+        //const arrival = parseInt(thing.arrT.toString().slice(14,16),10)+parseInt(thing.arrT.toString().slice(11,13),10)*60
+        const currentMinutes = currentTime.getHours() * 60 + currentTime.getMinutes();
+        const timeDifference = Math.round((arrival - currentTime) / 60000);
+        const busInfo = `Southbound-----Due in ${timeDifference} minutes`;
+        const busInfoElement = document.createElement('div'); 
+        busInfoElement.innerText = busInfo;
+        kingDiv.appendChild(busInfoElement);
+    })
+})
+  .catch(error => console.error('Error fetching data:', error));
+
+// none went north, I could re include, might in a bit
+  /* TO North Apperntly none go north
+  fetch(proxyUrl + encodeURIComponent('http://www.ctabustracker.com/bustime/api/v2/getpredictions?format=json&key=MDfcJRVTfSFJ4JXfXja9Jn75k&stpid=1897'))
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => { 
+    const incoming = data['bustime-response'].prd; 
+    const northDiv = document.getElementById('north'); 
+    northDiv.innerHTML = '';
+    incoming.forEach(thing => {
+        const currentTime = new Date();
+        const arrival = SusDate(thing.prdtm);
+        //const arrival = parseInt(thing.arrT.toString().slice(14,16),10)+parseInt(thing.arrT.toString().slice(11,13),10)*60
+        const currentMinutes = currentTime.getHours() * 60 + currentTime.getMinutes();
+        const timeDifference = Math.round((arrival - currentTime) / 60000);
+        const busInfo = `Northbound-----Due in ${timeDifference} minutes`;
+        const busInfoElement = document.createElement('div'); 
+        busInfoElement.innerText = busInfo;
+        northDiv.appendChild(busInfoElement);
+    })
+})
+  .catch(error => console.error('Error fetching data:', error));
+  */
+}
+bus22time()
+setInterval(bus22time, 1000*60);
+// CTA wide problems, you don't need a CTA transit key for this one
+  function Majorlert() { 
+    const proxyUrl = 'https://corsproxy.io/?key=98122491&url=';
+fetch(proxyUrl + encodeURIComponent('https://freshbeets.dev/api/transit'))
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => { 
+    const alerts = data[4].CTAAlerts.Alert;
+    const panixDiv = document.getElementById('panix'); 
+    let uhoh = false; 
+    alerts.forEach(alert => { 
+        if (alert.MajorAlert === '1') {
+          uhoh==true;
+            const head = `${alert.Headline}`;
+            const short = `${alert.ShortDescription}`;
+            panixDiv.innerHTML='MAJOR ALERT: '+head+'\n'+short+'\n';
+        }
+    })
+if(!uhoh){
+  panixDiv.innerHTML='No Problems, Have A Nice Day';
+}
+  })
+  .catch(error => console.error('Error fetching data:', error));
+}
+Majorlert()
+setInterval(Majorlert, 3000*60); 
+
+
+
+function redstatus(){
+fetch(proxyUrl + encodeURIComponent("https://freshbeets.dev/api/transit"))
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    const routeInfo = `${data[5].CTARoutes.RouteInfo.RouteStatus}`;
+    const ulDiv = document.getElementById('ul'); 
+    const reddetDiv = document.getElementById('reddet');
+    ulDiv.innerHTML = '';
+
+    if(routeInfo!='Normal Service'){
+        fetch(proxyUrl + encodeURIComponent('https://freshbeets.dev/api/transit'))
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    const detail = `${data[6].CTAAlerts.Alert[0].ShortDescription}`;
+    reddetDiv.innerHTML = '<b>Important: </b>'+detail;
+
+})
+    }
+
+    ulDiv.innerHTML = routeInfo;
+})
+  .catch(error => console.error('Error fetching data:', error));
+}
+redstatus()
+setInterval(redstatus, 2000*60);
+
+function clarkstatus(){
+fetch(proxyUrl + encodeURIComponent("https://freshbeets.dev/api/transit"))
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    const routeInfo = `${data[7].CTARoutes.RouteInfo.RouteStatus}`;
+    const clDiv = document.getElementById('22stat'); 
+    const cldetDiv = document.getElementById('22det');
+    cldetDiv.innerHTML = '';
+
+    if(routeInfo!='Normal Service'){
+        fetch(proxyUrl + encodeURIComponent('https://freshbeets.dev/api/transit'))
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    const detail = `${data[8].CTAAlerts.Alert[0].ShortDescription}`;
+    cldetDiv.innerHTML = '<b>Important: </b>'+detail;
+
+})
+    }
+
+    clDiv.innerHTML = routeInfo;
+})
+  .catch(error => console.error('Error fetching data:', error));
+}
+clarkstatus()
+setInterval(clarkstatus, 2000*60);
+
+function status70(){
+fetch(proxyUrl + encodeURIComponent("https://freshbeets.dev/api/transit"))
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    const routeInfo = `${data[9].CTARoutes.RouteInfo.RouteStatus}`;
+    const Div70 = document.getElementById('70stat'); 
+    const Div70det = document.getElementById('70det');
+    Div70det.innerHTML = '';
+
+    if(routeInfo!='Normal Service'){
+        fetch(proxyUrl + encodeURIComponent('https://freshbeets.dev/api/transit'))
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    const detail = `${data[10].CTAAlerts.Alert[0].ShortDescription}`;
+    Div70det.innerHTML = '<b>Important: </b>'+detail;
+
+})
+    }
+
+    Div70.innerHTML = routeInfo;
+})
+  .catch(error => console.error('Error fetching data:', error));
+}
+status70()
+setInterval(status70, 2000*60);
+
+function brownstatus(){
+fetch(proxyUrl + encodeURIComponent('https://freshbeets.dev/api/transit'))
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    const routeInfo = `${data[11].CTARoutes.RouteInfo.RouteStatus}`;
+    const brnDiv = document.getElementById('brownstat'); 
+    const browndetDiv = document.getElementById('browndet');
+    brnDiv.innerHTML = '';
+
+    if(routeInfo!='Normal Service'){
+        fetch(proxyUrl + encodeURIComponent('https://freshbeets.dev/api/transit'))
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    const detail = `${data[12].CTAAlerts.Alert[0].ShortDescription}`;
+    browndetDiv.innerHTML = '<b>Important: </b>'+detail;
+
+})
+    }
+
+    brnDiv.innerHTML = routeInfo;
+})
+  .catch(error => console.error('Error fetching data:', error));
+}
+brownstatus()
+setInterval(brownstatus, 2000*60); 
+
+
+function weather(){
+fetch("https://freshbeets.dev/api/transit")
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    const temps = data[13].hourly.temperature_2m;
+    const pp = data[13].hourly.precipitation_probability[1];
+    const ppi = data[13].hourly.precipitation[1];
+    const ctempDiv = document.getElementById('ctemp'); 
+    const ptempDiv = document.getElementById('ptemp');
+    const prepiDiv = document.getElementById('prepi');
+    ctempDiv.innerHTML = '';
+    ctempDiv.innerHTML = temps[0] + 'F';
+    prepiDiv.innerHTML = '';
+    prepiDiv.innerHTML = 'Chance of '+ ppi +' mililiters of rain: '+pp+"% ";
+    ptempDiv.innerHTML = '';
+    ptempDiv.innerHTML = temps[1] + 'F';
+
+})
+  .catch(error => console.error('Error fetching data:', error));
+}
+weather()
+setInterval(weather, 5000*60);
+
+    </script>
+    <!--The Trains with the OFFICAL CTA TRAIN TRACKER LOGO, plz dont altert that cause of copywrite problems-->
+    <div class = "header"><img src="train.gif" alt="Train Logo">Trains:</div>
+    <!-- Offical redline red color, also plz don't alter-->
+    <div style ="background-color: rgb(227, 25, 55)">
+      <!-- ul is for the redlines status, reddet is for the specific detailed problem that is going on, if the train's status is not normal-->
+        <div id = "subheader">Red Line<mini><div id='ul'></div><div id='reddet'></div></mini></div>
+<div id = "subheader"><mini>
+    <div class='row'>
+      <!-- Broken up into collums, how is the div id for Howard-->
+        <div class ='column'>To Howard<hr style="border-color: rgb(9, 15, 44); height: 2px; width: 80%; background-color: rgb(9, 15, 44);"><div id='How'></div></div>
+
+<!---nother collum, div id for 95 trains, id is called allred after the carti album-->
+        <div class ='column'>To 95th<hr style="border-color: rgb(9, 15, 44); height: 2px; width: 80%; background-color: rgb(9, 15, 44);"><div id='Allred'></div></div>
+    </div>
+    </mini></div></div>
+    <div style ="background-color: rgb(118, 66, 0)">
+      <!--Brownstat is status, browndet is detail-->
+      <div id = "subheader">Brown Line<mini><div id='brownstat'></div><div id ="browndet"></div></mini></div>
+<div id = "subheader"><mini>
+  <div class='row'>
+    <!--Kim is for kimball, bruh-->
+      <div class ='column'>To Kimball<hr style="border-color: rgb(9, 15, 44); height: 2px; width: 80%; background-color: rgb(9, 15, 44);"><div id='Kim'></div></div>
+
+<!-- Looop is for the loop-->
+      <div class ='column'>To Loop<hr style="border-color: rgb(9, 15, 44); height: 2px; width: 80%; background-color: rgb(9, 15, 44);"><div id='Looop'></div></div>
+  </div>
+  </mini></div></div>
+  <div class = "header"><img src="bus.gif" alt="Bus Logo">Bus:</div>
+  <div style ="background-color: rgb(86, 90, 92)">
+    <!-- The 70 bus, stat is bus status, det is bus detail in case of problem-->
+    <div id = "subheader">70 Bus<mini><div id='70stat'></div><div id ="70det"></div></mini></div>
+<div id = "subheader"><mini>
+<div class='row'>
+  <!--water is for eastbound trains cause the water is east-->
+    <div class ='column'>Eastbound<hr style="border-color: rgb(9, 15, 44); height: 2px; width: 80%; background-color: rgb(9, 15, 44);"><div id='water'></div></div>
+
+<!--hood is for westbound cause I really don't know what else to put-->
+    <div class ='column'>Westbound<hr style="border-color: rgb(9, 15, 44); height: 2px; width: 80%; background-color: rgb(9, 15, 44);"><div id='hood'></div></div>
+</div>
+</mini></div>
+<!--22stat is the 22 clark status det is the 22 Clark bus detailed repport-->
+<div id = "subheader">22 Clark Bus<mini><div id='22stat'></div><div id ="22det"></div></mini></div>
+<div id = "subheader"><mini>
+<div class='row'>
+
+<!--There is only southbound stuff from my understanding, but it may be that there is none currently when I made it so i didnt account for it, also kingV is the div id for south-->
+    <div class ='column'>Southbound<hr style="border-color: rgb(9, 15, 44); height: 2px; width: 80%; background-color: rgb(9, 15, 44);"><div id='kingV'></div></div>
+</div>
+</mini></div>
+</div>
+
+
+<div class="funbody">
+  <div id = "subheader"><div style="color: white">Weather<mini></div></div>
+
+<div class='row'>
+  <!--the current temprature, id is ctemp-->
+  <div class ='column'>Curent Temp<hr style="border-color: rgb(255, 255, 255); height: 2px; width: 80%; background-color: rgb(255, 255, 255);"><div id='ctemp'></div></div>
+
+<!--The predicted temp in an hour, id is ptemp-->
+  <div class ='column'>Predited Temp<hr style="border-color: rgb(255, 255, 255); height: 2px; width: 80%; background-color: rgb(255, 255, 255);"><div id='ptemp'></div></div>
+</div>
+<div class='row'>
+  <!--The % chance of this much precipetation-->
+  <div class ='column'>Precipitaion<hr style="border-color: rgb(255, 255, 255); height: 2px; width: 80%; background-color: rgb(255, 255, 255);"><div id='prepi'></div></div>
+
+ <!-- I was going to possibnly add another weather aspect, however I also wanted a form for suggestions, so I just combined the two, they could be switched up later om-->
+  <div class ='column'>Suggestions? Scan The Code Bellow!<div id='????'></div>
+  <img src="qr.png" alt="Email qr"></div>
+</div>
+ </div>
+
+
+<div style="text-align: right;">Footer</div>
+</body>
+</div>
+</html>

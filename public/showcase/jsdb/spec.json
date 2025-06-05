@@ -1,0 +1,12 @@
+{
+    "wheretexttypeid": "blogbody",
+    "destid": "testbod",
+    "titleid": "blogtitle",
+    "desttitleid": "testtit",
+    "titleon": 1,
+    "jsdbon": 1,
+    "imgon": 1,
+    "allowhtml": 0,
+    "allowhtmlscript": 0,
+    "allowhtmlsty": 0
+    }

@@ -1,0 +1,60 @@
+#
+
+User-agent: Googlebot
+Disallow: /auth/login
+crawl-delay: 1
+
+User-agent: Googlebot-Mobile
+Disallow: /auth/login
+crawl-delay: 1
+
+User-agent: Twitterbot
+Disallow: /auth/login
+crawl-delay: 1
+
+User-agent: W3C-checklink
+Disallow: /auth/login
+crawl-delay: 1
+
+User-Agent: bingbot
+Disallow: /auth/login
+crawl-delay: 1
+
+User-Agent: msnbot
+Disallow: /auth/login
+crawl-delay: 1
+
+User-agent: AccessibleWebBot
+Disallow: /auth/login
+
+User-agent: facebookexternalhit
+Disallow: /auth/login
+crawl-delay: 1
+
+User-agent: rogerbot
+Disallow:
+
+User-agent: dotbot
+Disallow:
+
+User-agent: Riddler
+Disallow: /
+
+User-agent: SMTBot
+Disallow: /
+
+User-agent: scrapybot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: PowerMapper
+Allow: /
+
+User-agent: *
+Disallow: /
+Allow: /robots.txt
+
+Sitemap: https://freshbeets.dev/sitemap.xml
+

@@ -1,0 +1,6 @@
+jsdbsetup(): sets up the configurations of the spec.json file for use
+jsdbsecurity(): removes html, script, andor style tags that exist besides jsdb tags
+jsdbparse(<message>): parses the message and retruns the new html transofrmed text
+add tags: adds a correcctly formated tag to the existing text examples include boldadd or urladd
+on off tags: toggles on features of the spec.json file, which could be useful, possibly include some of these toggles to allow users to use html or no jsdb if they want
+jsdb(): what you should use, it sets up, secures, parses, and changes everything, this is the main function

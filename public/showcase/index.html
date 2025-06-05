@@ -1,0 +1,32 @@
+<script src="jsdb/jsdb.js" defer></script>
+<h1>JSDB Showcase</h1>
+<h4>Hello, I know this website looks like poo, but really this is meant to be a showcase of JSDB, a new light wieght markup language for Javascript Based Forums.
+    You see, many existing forums use a markup language called bbcode, but it is kinda old and mostly for forums that interact with php
+    jsdb changes this, and works as a easily useable markup up language for any application, mesaging apps, forums, or even a contact form. 
+    It works similar to bbcode, and to use it like this [tag]text[/tag]. There are a few tags as of now, bold, italic, image, emoji's, ect.
+    The Emojis work the same, you just say [e](insert feeleing)[e], right now there is funny, mad, ok, and sad.
+
+    All of the buttons bellow are included in jsdb's functionality, so try it out. If you want to add it to your project, download it bellow, then 
+    Move it to your project, and then use the rules.txt to learn how to map the files
+</h4>
+Title: <br>
+<input type="text" id="blogtitle"><br><br>Body:<br>
+<textarea id="blogbody" style="width: 100%; height: 20%;"></textarea>
+
+    <br> <button onclick="addbold();" id="shipit" style="margin: 5; padding: .25%;">Add Bold</button>
+    <button onclick="additalic();" id="shipit" style="margin: 5; padding: .25%;">Add Itallic</button>
+    <button onclick="addu();" id="shipit" style="margin: 5; padding: .25%;">Add Underline</button>
+    <button onclick="addurl();" id="shipit" style="margin: 5; padding: .25%;">Add Url</button>
+    <button onclick="addcode();" id="shipit" style="margin: 5; padding: .25%;">Add Code</button>
+    <button onclick="addquote();" id="shipit" style="margin: 5; padding: .25%;">Add Quote</button>
+    <button onclick="addimg();" id="shipit" style="margin: 5; padding: .25%;">Add Img</button>
+    <button onclick="addemoji();" id="shipit" style="margin: 5; padding: .25%;">Add Emoji</button>
+
+    <br><br><button  onclick="jsdb();" id="shipit" style="margin: 25; padding: 1%;">Ship it</button>
+    <br> <button onclick="jsdbonoff();" id="shipit" style="margin: 5; padding: .5%;">Jsdb On</button>
+     <button onclick="htmlonoff();" id="shipit" style="margin: 5; padding: .5%;">HTML On</button>
+    <button onclick="scriptonoff();" id="shipit" style="margin: 5; padding: .5%;">Script On</button>
+     <button onclick="styleonoff();" id="shipit" style="margin: 5; padding: .5%;">Style On</button>
+   <button onclick="imgonoff();" id="shipit" style="margin: 5; padding: .5%;">Img On</button>
+    <br><br><h1 id="testtit"></h1>
+    <p id="testbod"></p>

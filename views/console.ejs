@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" type="text/css" href="style.css">
+<head>
+    <title>Blog Creator</title>
+</head>
+<body class="body">
+
+        <div class="console">
+            Developer Console Options
+        <div class="row">
+            <div class="colem">
+                <div class="sub">Blog Post</div>
+        <form id="new-post-form" action="/console/create_post" method="post">
+    Title: <input type="text" id="title" name="title" required><br>
+    Body: <textarea id="content" name="content" required></textarea><br>
+    <button type="submit">Finish</button>
+    </form>
+    </div>
+    <div class="colem">
+                <div class="sub">Dependencies</div>
+                
+        <div id="depend" name="depend"></div>
+
+    </div>
+    </div>
+    </div>
+<script src="/routes/console.js">showdepend()</script>
+</body>
+</html>
