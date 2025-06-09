@@ -5,11 +5,12 @@ const path = require('path');
 
 
 const dependPath = path.join(__dirname, '..','package.json');
+const artPath = path.join(__dirname, '..', 'data' , 'art.json');
 const blogPostsPath = path.join(__dirname, '..', 'data', 'blog_posts.json');
 const transitPath = path.join(__dirname, '..', 'data', 'transit.json');
-function readPosts() {
+function readPosts(pathz) {
   try {
-    const rawData = fs.readFileSync(blogPostsPath, 'utf8');
+    const rawData = fs.readFileSync(pathz, 'utf8');
     const parsedlist = JSON.parse(rawData);
     console.log(typeof parsedlist);
     return parsedlist
@@ -71,7 +72,7 @@ router.post('/posts', (req, res) => {
     };
 
     try {
-        const existingPosts = readPosts(); // Read from file
+        const existingPosts = readPosts(blogPostsPath); // Read from file
         const updatedPosts = [...existingPosts, postToAdd]; // Add the new post
         writePosts(updatedPosts,blogPostsPath); // Write to file
         res.status(201).json(postToAdd); // Send back the *newly created* post
@@ -80,6 +81,61 @@ router.post('/posts', (req, res) => {
         return res.status(500).json({ error: "Failed to create post" });
     }
 });
+
+
+router.post('/art', (req, res) => {
+    const newPost = req.body; // Expect a *single* new post object
+    console.log(newPost)
+    if (!newPost.email) {
+        return res.status(400).json({ error: "Not enough data n shit" }); // 400 Bad Request
+    }
+
+    try {
+        let needmakenewpost = 1;
+        let emailIncluded = readPosts(artPath);
+        for (let i = 0; i < emailIncluded.length; i++) {
+        if(emailIncluded[i].email == newPost.email){
+            if(newPost.orders[0]!= null){
+            emailIncluded[i].orders.push(newPost.orders[0])
+            writePosts(emailIncluded,artPath);
+            }
+            needmakenewpost = 0;
+            break;
+            
+        }
+        }
+        if (needmakenewpost==1){
+            emailIncluded = [...emailIncluded, newPost]
+            writePosts(emailIncluded,artPath);
+        }
+        res.status(201).json(emailIncluded); // Send back the *newly created* post
+    } catch (error) {
+        console.error("Error creating post:", error);
+        return res.status(500).json({ error: "Failed to create post" });
+    }
+});
+
+
+
+
+router.get('/art', (req, res) => {
+    fs.readFile(artPath, 'utf8', (err, data) => {
+        if (err) {
+            console.error("Error reading blog posts file:", err);
+            return res.status(500).json({ error: "Error loading posts." }); // Send JSON error
+        }
+
+        try {
+            const posts = JSON.parse(data);
+            res.json(posts); // Send the posts as JSON
+        } catch (parseError) {
+            console.error("Error parsing blog posts JSON:", parseError);
+            return res.status(500).json({ error: "Error loading posts." }); // Send JSON error
+        }
+        res.status(100)
+    });
+});
+
 
 router.get('/transit', (req, res) => {
     fs.readFile(transitPath, 'utf8', (err, data) => {

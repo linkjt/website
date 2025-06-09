@@ -1,3 +1,8 @@
+const express = require('express');
+const router = express.Router();
+const fs = require('fs');
+
+
 const observer = new IntersectionObserver(entries => {
     // Loop over the entries
     entries.forEach(entry => {
@@ -25,6 +30,13 @@ const observer = new IntersectionObserver(entries => {
   eyes.observe(document.getElementById('5'));
   observer.observe(document.getElementById('3'));
   eyes.observe(document.getElementById('6'));
+  
+ 
+
+
+
+
+
 
 
 

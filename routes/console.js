@@ -4,8 +4,6 @@ const fs = require('fs'); // For JSON file reading and writing
 const path = require('path')
 
 
-const blogPostsPath = path.join(__dirname,'data','blog_posts.json')
-const packagepath = path.join(__dirname,'package.json')
 
 // Middleware to check if user is logged in
 const isLoggedIn = (req, res, next) => {
@@ -21,6 +19,79 @@ router.get('/', isLoggedIn, (req, res) => {
     res.status(200)
   res.render('console');
 });
+
+
+router.post('/buyartwork', (req, res) => { 
+    
+    console.log(req.body)
+    const { name,email, sty, specifications } = req.body;
+    
+    
+    
+    const buyInfo = {name , sty, specifications};
+    const newPost = { email: email,  orders: [buyInfo]}; // Send *only* the new post
+    console.log(newPost)
+    fetch('https://freshbeets.dev/api/art', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newPost)
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(errData => { // Parse JSON error message
+                throw new Error(`HTTP error! Status: ${response.status}, Details: ${JSON.stringify(errData)}`);
+            });
+        }
+        return response.json(); // Expect the *new* post back
+    })
+    .then(createdPost => {
+        console.log('Post created successfully:', createdPost);
+        // Potentially update the UI (e.g., add the new post to the list)
+        res.redirect('https://freshbeets.dev/steven/'); // Redirect *after* successful API call.
+    })
+    .catch(error => {
+        console.error('Error creating post:', error);
+        // Handle the error (show message to user, etc.)
+        res.status(500).send("Failed to create post."); // Important: Send error to client.
+    });
+});
+
+router.post('/emailsignup', (req, res) => { 
+    
+    console.log(req.body)
+    const {email} = req.body;
+    const newPost = { email: email,  orders: []};
+    
+    
+
+    console.log(newPost)
+    fetch('https://freshbeets.dev/api/art', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newPost)
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(errData => { // Parse JSON error message
+                throw new Error(`HTTP error! Status: ${response.status}, Details: ${JSON.stringify(errData)}`);
+            });
+        }
+        return response.json(); // Expect the *new* post back
+    })
+    .then(createdPost => {
+        console.log('Post created successfully:', createdPost);
+        // Potentially update the UI (e.g., add the new post to the list)
+        res.redirect('https://freshbeets.dev/steven/'); // Redirect *after* successful API call.
+    })
+    .catch(error => {
+        console.error('Error creating post:', error);
+        // Handle the error (show message to user, etc.)
+        res.status(500).send("Failed to create post."); // Important: Send error to client.
+    });
+});
+
+
+
 
 router.post('/create_post', isLoggedIn, (req, res) => {
     const { title, content } = req.body;
