@@ -30,9 +30,9 @@ fetch("https://freshbeets.dev/api/transit")
      const items = xmlDoc.querySelectorAll("item");
   for (let i = 0; i < 4; i++) {
     const title = items[i].querySelector("title").textContent;
-    const link = items[i].querySelector("link").textContent;
     const description = items[i].querySelector("description").textContent.replace(/\t/g, "").replace(/\n/g, "");
     const date = new Date();
+    const compareDate = new Date(description);
     
     
     const updateElement = document.createElement('div');
@@ -616,11 +616,11 @@ fetch("https://freshbeets.dev/api/transit")
     const ptempDiv = document.getElementById('ptemp');
     const prepiDiv = document.getElementById('prepi');
     ctempDiv.innerHTML = '';
-    ctempDiv.innerHTML = 'Current Temprature: ' + temps[0] + 'F';
+    ctempDiv.innerHTML = 'Current Temperature: ' + temps[0] + 'F';
     prepiDiv.innerHTML = '';
     prepiDiv.innerHTML = "Percent Chance of Rain: " + pp+"% ";
     ptempDiv.innerHTML = '';
-    ptempDiv.innerHTML = "Expected Temprature in 1 hr: " + temps[1] + 'F';
+    ptempDiv.innerHTML = "Expected Temperature in 1 hr: " + temps[1] + 'F';
 
 })
   .catch(error => console.error('Error fetching data:', error));

@@ -7,7 +7,11 @@ const path = require('path');
 const dependPath = path.join(__dirname, '..','package.json');
 const artPath = path.join(__dirname, '..', 'data' , 'art.json');
 const blogPostsPath = path.join(__dirname, '..', 'data', 'blog_posts.json');
+const beachPath = path.join(__dirname, '..', 'data', 'beach_pins.json');
 const transitPath = path.join(__dirname, '..', 'data', 'transit.json');
+const ClashPath = path.join(__dirname, '..', 'data', 'clash.json');
+
+
 function readPosts(pathz) {
   try {
     const rawData = fs.readFileSync(pathz, 'utf8');
@@ -25,6 +29,40 @@ function writePosts(posts,pathz) {
 }
 router.get('/posts', (req, res) => {
     fs.readFile(blogPostsPath, 'utf8', (err, data) => {
+        if (err) {
+            console.error("Error reading blog posts file:", err);
+            return res.status(500).json({ error: "Error loading posts." }); // Send JSON error
+        }
+
+        try {
+            const posts = JSON.parse(data);
+            res.json(posts); // Send the posts as JSON
+        } catch (parseError) {
+            console.error("Error parsing blog posts JSON:", parseError);
+            return res.status(500).json({ error: "Error loading posts." }); // Send JSON error
+        }
+        res.status(100)
+    });
+});
+router.get('/clash', (req, res) => {
+    fs.readFile(ClashPath, 'utf8', (err, data) => {
+        if (err) {
+            console.error("Error reading clash file:", err);
+            return res.status(500).json({ error: "Error loading posts." }); // Send JSON error
+        }
+
+        try {
+            const info = JSON.parse(data);
+            res.json(info); // Send the posts as JSON
+        } catch (parseError) {
+            console.error("Error parsing blog posts JSON:", parseError);
+            return res.status(500).json({ error: "Error loading posts." }); // Send JSON error
+        }
+        res.status(100)
+    });
+});
+router.get('/beach', (req, res) => {
+    fs.readFile(beachPath, 'utf8', (err, data) => {
         if (err) {
             console.error("Error reading blog posts file:", err);
             return res.status(500).json({ error: "Error loading posts." }); // Send JSON error
@@ -97,7 +135,6 @@ router.post('/art', (req, res) => {
         if(emailIncluded[i].email == newPost.email){
             if(newPost.orders[0]!= null){
             emailIncluded[i].orders.push(newPost.orders[0])
-            writePosts(emailIncluded,artPath);
             }
             needmakenewpost = 0;
             break;
@@ -106,9 +143,47 @@ router.post('/art', (req, res) => {
         }
         if (needmakenewpost==1){
             emailIncluded = [...emailIncluded, newPost]
-            writePosts(emailIncluded,artPath);
         }
         res.status(201).json(emailIncluded); // Send back the *newly created* post
+    } catch (error) {
+        console.error("Error creating post:", error);
+        return res.status(500).json({ error: "Failed to create post" });
+    }
+});
+router.post('/beach', (req, res) => {
+    const newPin = req.body;
+    console.log(newPin)
+    if (!newPin.name) {
+        return res.status(400).json({ error: "Not enough data n shit" }); // 400 Bad Request
+    }
+
+    try {
+        let needmakenewpost = 1;
+        let nameIncluded = readPosts(beachPath);
+        for (let i = 0; i < nameIncluded.length; i++) {
+        if(nameIncluded[i].name == newPin.name){
+            if(newPin.beachInfo[0]!= null){
+            nameIncluded[i].beachInfo.push(newPin.beachInfo[0])
+            console.log(newPin.image)
+            if(newPin.image != null && newPin.image != ""){
+                nameIncluded[i].image = newPin.image
+                
+            }
+            writePosts(nameIncluded,beachPath);
+            }
+            needmakenewpost = 0;
+            break;
+            
+        }
+        }
+        if (needmakenewpost==1){
+            if(newPin.image == null){
+                newPin.image = "default.jpg"
+            }
+            nameIncluded = [...nameIncluded, newPin]
+            writePosts(nameIncluded,beachPath);
+        }
+        res.status(201).json(nameIncluded); // Send back the *newly created* post
     } catch (error) {
         console.error("Error creating post:", error);
         return res.status(500).json({ error: "Failed to create post" });

@@ -8,12 +8,10 @@ let posts = [];
 
 // updates the time to the time id
 
-// proxy to get around cors protocal, it cool fr fr
-const proxyUrl = 'https://corsproxy.io/?key=98122491&url=';
+
 const targetUrl = 'https://www.transitchicago.com/api/1.0/routes.aspx?routeid=red&outputType=JSON';
 // get the redline time
 function redlinetime(){
-const proxyUrl = 'https://corsproxy.io/?key=98122491&url=';
 fetch('https://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=7d904ff669714dbaa659ef9959e91344&outputType=JSON&mapid=40630')
 .then(response => {
 if (!response.ok) {
@@ -33,8 +31,7 @@ setInterval(redlinetime, 2000*60)
 // brown line time
 function brnlinetime(){
 
-const proxyUrl = 'https://corsproxy.io/?key=98122491&url=';
-fetch(proxyUrl + encodeURIComponent('https://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=7d904ff669714dbaa659ef9959e91344&outputType=JSON&mapid=40710'))
+fetch('https://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=7d904ff669714dbaa659ef9959e91344&outputType=JSON&mapid=40710')
 .then(response => {
 if (!response.ok) {
 throw new Error('Network response was not ok');
@@ -61,10 +58,10 @@ return new Date(year, month, day, hour, minute);
 
 // 70 bus
 function bus70time(){
-const proxyUrl = 'https://corsproxy.io/?key=98122491&url=';
+
 /* TO THE HOOOOOOOOD */
 // Each bus has its own individual page, they aren't both in the same page lik the trains
-fetch(proxyUrl + encodeURIComponent('http://www.ctabustracker.com/bustime/api/v2/getpredictions?format=json&key=MDfcJRVTfSFJ4JXfXja9Jn75k&stpid=15676'))
+fetch('http://www.ctabustracker.com/bustime/api/v2/getpredictions?format=json&key=MDfcJRVTfSFJ4JXfXja9Jn75k&stpid=15676')
 .then(response => {
 if (!response.ok) {
 throw new Error('Network response was not ok');
@@ -79,7 +76,7 @@ return response.json();
 
 /* TO ZA WATA*/
 // Other one, this is the api for the going east
-fetch(proxyUrl + encodeURIComponent('http://www.ctabustracker.com/bustime/api/v2/getpredictions?format=json&key=MDfcJRVTfSFJ4JXfXja9Jn75k&stpid=2033'))
+fetch('http://www.ctabustracker.com/bustime/api/v2/getpredictions?format=json&key=MDfcJRVTfSFJ4JXfXja9Jn75k&stpid=2033')
 .then(response => {
 if (!response.ok) {
 throw new Error('Network response was not ok');
@@ -96,10 +93,9 @@ setInterval(bus70time, 5000*60)
 
 //22 clark bus
 function bus22time(){
-const proxyUrl = 'https://corsproxy.io/?key=98122491&url=';
 /* TO KingV */
 // api for southbound
-fetch(proxyUrl + encodeURIComponent('http://www.ctabustracker.com/bustime/api/v2/getpredictions?format=json&key=MDfcJRVTfSFJ4JXfXja9Jn75k&stpid=1853'))
+fetch('http://www.ctabustracker.com/bustime/api/v2/getpredictions?format=json&key=MDfcJRVTfSFJ4JXfXja9Jn75k&stpid=1853')
 .then(response => {
 if (!response.ok) {
 throw new Error('Network response was not ok');
@@ -113,7 +109,7 @@ return response.json();
 
 // none went north, I could re include, might in a bit
 
-fetch(proxyUrl + encodeURIComponent('http://www.ctabustracker.com/bustime/api/v2/getpredictions?format=json&key=MDfcJRVTfSFJ4JXfXja9Jn75k&stpid=1898'))
+fetch('http://www.ctabustracker.com/bustime/api/v2/getpredictions?format=json&key=MDfcJRVTfSFJ4JXfXja9Jn75k&stpid=1898')
 .then(response => {
 if (!response.ok) {
 throw new Error('Network response was not ok');
@@ -131,10 +127,9 @@ setInterval(bus22time, 2000*60);
 
 //66 chicago
 function bus66time(){
-const proxyUrl = 'https://corsproxy.io/?key=98122491&url=';
 /* TO KingV */
 // api for southbound
-fetch(proxyUrl + encodeURIComponent('http://www.ctabustracker.com/bustime/api/v2/getpredictions?format=json&key=MDfcJRVTfSFJ4JXfXja9Jn75k&stpid=606'))
+fetch('http://www.ctabustracker.com/bustime/api/v2/getpredictions?format=json&key=MDfcJRVTfSFJ4JXfXja9Jn75k&stpid=606')
 .then(response => {
 if (!response.ok) {
 throw new Error('Network response was not ok');
@@ -148,7 +143,7 @@ return response.json();
 
 // none went north, I could re include, might in a bit
 
-fetch(proxyUrl + encodeURIComponent('http://www.ctabustracker.com/bustime/api/v2/getpredictions?format=json&key=MDfcJRVTfSFJ4JXfXja9Jn75k&stpid=572'))
+fetch('http://www.ctabustracker.com/bustime/api/v2/getpredictions?format=json&key=MDfcJRVTfSFJ4JXfXja9Jn75k&stpid=572')
 .then(response => {
 if (!response.ok) {
 throw new Error('Network response was not ok');
@@ -166,8 +161,7 @@ setInterval(bus66time, 2000*60);
 
 // CTA wide problems, you don't need a CTA transit key for this one
 function Majorlert() { 
-const proxyUrl = 'https://corsproxy.io/?key=98122491&url=';
-fetch(proxyUrl + encodeURIComponent('https://www.transitchicago.com/api/1.0/alerts.aspx?activeonly=TRUE&outputType=JSON'))
+fetch('https://www.transitchicago.com/api/1.0/alerts.aspx?activeonly=TRUE&outputType=JSON')
 .then(response => {
 if (!response.ok) {
 throw new Error('Network response was not ok');
@@ -184,7 +178,7 @@ setInterval(Majorlert, 5000*60)
 
 
 function redstatus(){
-fetch(proxyUrl + encodeURIComponent(targetUrl))
+fetch(targetUrl)
 .then(response => {
 if (!response.ok) {
 throw new Error('Network response was not ok');
@@ -196,7 +190,7 @@ const routeInfo = `${data.CTARoutes.RouteInfo.RouteStatus}`;
 posts[5] = data;
 
 if(routeInfo!='Normal Service'){
-  fetch(proxyUrl + encodeURIComponent('https://www.transitchicago.com/api/1.0/alerts.aspx?outputType=JSON&activeonly=TRUE&routeid=Red&recentdays=1'))
+  fetch('https://www.transitchicago.com/api/1.0/alerts.aspx?outputType=JSON&activeonly=TRUE&routeid=Red&recentdays=1')
   .then(response => {
       if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -215,7 +209,7 @@ redstatus()
 setInterval(redstatus, 5000*60)
 
 function clarkstatus(){
-fetch(proxyUrl + encodeURIComponent("https://www.transitchicago.com/api/1.0/routes.aspx?routeid=22&outputType=JSON"))
+fetch(("https://www.transitchicago.com/api/1.0/routes.aspx?routeid=22&outputType=JSON"))
 .then(response => {
 if (!response.ok) {
 throw new Error('Network response was not ok');
@@ -227,7 +221,7 @@ const routeInfo = `${data.CTARoutes.RouteInfo.RouteStatus}`;
 posts[7] = data;
 
 if(routeInfo!='Normal Service'){
-  fetch(proxyUrl + encodeURIComponent('https://www.transitchicago.com/api/1.0/alerts.aspx?outputType=JSON&activeonly=TRUE&routeid=22&recentdays=1'))
+  fetch('https://www.transitchicago.com/api/1.0/alerts.aspx?outputType=JSON&activeonly=TRUE&routeid=22&recentdays=1')
   .then(response => {
       if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -248,7 +242,7 @@ clarkstatus()
 setInterval(clarkstatus, 5000*60)
 
 function status66(){
-fetch(proxyUrl + encodeURIComponent("https://www.transitchicago.com/api/1.0/routes.aspx?routeid=66&outputType=JSON"))
+fetch("https://www.transitchicago.com/api/1.0/routes.aspx?routeid=66&outputType=JSON")
 .then(response => {
 if (!response.ok) {
 throw new Error('Network response was not ok');
@@ -260,7 +254,7 @@ const routeInfo = `${data.CTARoutes.RouteInfo.RouteStatus}`;
 posts[18] = data;
 
 if(routeInfo!='Normal Service'){
-  fetch(proxyUrl + encodeURIComponent('https://www.transitchicago.com/api/1.0/alerts.aspx?outputType=JSON&activeonly=TRUE&routeid=66&recentdays=1'))
+  fetch('https://www.transitchicago.com/api/1.0/alerts.aspx?outputType=JSON&activeonly=TRUE&routeid=66&recentdays=1')
   .then(response => {
       if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -281,7 +275,7 @@ status66()
 setInterval(status66, 5000*60)
 
 function status70(){
-fetch(proxyUrl + encodeURIComponent("https://www.transitchicago.com/api/1.0/routes.aspx?routeid=70&outputType=JSON"))
+fetch("https://www.transitchicago.com/api/1.0/routes.aspx?routeid=70&outputType=JSON")
 .then(response => {
 if (!response.ok) {
 throw new Error('Network response was not ok');
@@ -293,7 +287,7 @@ const routeInfo = `${data.CTARoutes.RouteInfo.RouteStatus}`;
 posts[9] = data;
 
 if(routeInfo!='Normal Service'){
-  fetch(proxyUrl + encodeURIComponent('https://www.transitchicago.com/api/1.0/alerts.aspx?outputType=JSON&activeonly=TRUE&routeid=70&recentdays=1'))
+  fetch('https://www.transitchicago.com/api/1.0/alerts.aspx?outputType=JSON&activeonly=TRUE&routeid=70&recentdays=1')
   .then(response => {
       if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -314,7 +308,7 @@ status70()
 setInterval(status70, 5000*60)
 
 function brownstatus(){
-fetch(proxyUrl + encodeURIComponent('https://www.transitchicago.com/api/1.0/routes.aspx?routeid=brn&outputType=JSON'))
+fetch('https://www.transitchicago.com/api/1.0/routes.aspx?routeid=brn&outputType=JSON')
 .then(response => {
 if (!response.ok) {
 throw new Error('Network response was not ok');
@@ -326,7 +320,7 @@ const routeInfo = `${data.CTARoutes.RouteInfo.RouteStatus}`;
 posts[11] = data;
 
 if(routeInfo!='Normal Service'){
-  fetch(proxyUrl + encodeURIComponent('https://www.transitchicago.com/api/1.0/alerts.aspx?outputType=JSON&activeonly=TRUE&routeid=Brn&recentdays=1'))
+  fetch('https://www.transitchicago.com/api/1.0/alerts.aspx?outputType=JSON&activeonly=TRUE&routeid=Brn&recentdays=1')
   .then(response => {
       if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -361,23 +355,25 @@ return response.json();
 weather()
 setInterval(weather, 5000*60)
 
-function paytonupdates(){
- fetch("https://www.wpcp.org/apps/events/events_rss.jsp?id=0")
-     .then(response => {
+async function paytonupdates(){
+ try {
+    const response = await fetch("https://www.wpcp.org/apps/events/events_rss.jsp?id=0");
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-    return response.text;
-  })
-  .then(data => {
-    posts[20] = data;
-})
-.catch(error => console.error('Error fetching data:', error));
+    const rssText = await response.text();
+      console.log(rssText)
+    posts[20] = rssText;
+} catch (error) {
+    console.error("Error fetching or parsing RSS feed:", error);
+    return [];
+  }
+
 
 
 }
-paytonupdates()
-setInterval(paytonupdates, 1000*60); 
+paytonupdates();
+setInterval(paytonupdates, 60*60*6*1000); 
 
 
 

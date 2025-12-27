@@ -1,0 +1,15 @@
+#map { width: 100vw; height: 65vh;}
+
+.leaflet-popup-content {
+  margin: 4px;
+}
+html, body {
+  overflow-x:hidden; 
+} 
+.x-modal .x-modal-content {
+    max-width: 85vw !important; /* Adjust the percentage as needed */
+}
+.modal-open {
+    overflow: hidden;
+    position: fixed;
+}

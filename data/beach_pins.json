@@ -1,0 +1,149 @@
+[
+  {
+    "name": "John",
+    "beachInfo": [
+      {
+        "description": "running, gonna jump in",
+        "lat": "41.90349498581388",
+        "long": "-87.62399196624757",
+        "starttime": "2025-07-09T00:25:51.827Z",
+        "endtime": "2025-07-09T01:25:51.827Z",
+        "bring": "",
+        "deleted": false
+      },
+      {
+        "description": "Beach Works",
+        "lat": "41.902791913336614",
+        "long": "-87.62442111968996",
+        "starttime": "2025-07-10T01:33:32.081Z",
+        "endtime": "2025-07-10T02:33:32.081Z",
+        "bring": "",
+        "deleted": false
+      },
+      {
+        "description": "Beach Works",
+        "lat": "41.91196727662539",
+        "long": "-87.62510776519777",
+        "starttime": "2025-07-10T01:42:42.624Z",
+        "endtime": "2025-07-10T03:42:42.624Z",
+        "bring": "",
+        "deleted": false
+      },
+      {
+        "description": "Beach, volleyball, swim, shit like that",
+        "lat": "41.90397487393793",
+        "long": "-87.6236915588379",
+        "starttime": "2025-07-18T23:00:24.391Z",
+        "endtime": "2025-07-19T01:00:24.391Z",
+        "bring": "Friends or smth",
+        "deleted": false
+      },
+      {
+        "description": "Xc beach",
+        "lat": "41.90317457977165",
+        "long": "-87.62326240539552",
+        "starttime": "2025-07-21T23:00:13.735Z",
+        "endtime": "2025-07-22T01:00:13.735Z",
+        "bring": "",
+        "deleted": false
+      },
+      {
+        "description": "I better",
+        "lat": "41.907651565874964",
+        "long": "-87.62454986572266",
+        "starttime": "2025-09-18T22:32:31.577Z",
+        "endtime": "2025-09-18T23:32:31.577Z",
+        "bring": "",
+        "deleted": false
+      },
+      {
+        "description": "Coming to liams",
+        "lat": "41.92259985772675",
+        "long": "-87.64620065689087",
+        "starttime": "2025-12-21T09:10:56.283Z",
+        "endtime": "2025-12-21T11:10:56.283Z",
+        "bring": "",
+        "deleted": false
+      },
+      {
+        "description": "Liam",
+        "lat": "41.92272990463414",
+        "long": "-87.64609336853029",
+        "starttime": "2025-12-21T08:00:00.991Z",
+        "endtime": "2025-12-21T11:00:00.991Z",
+        "bring": "",
+        "deleted": false
+      },
+      {
+        "description": "Liam",
+        "lat": "41.92258862397088",
+        "long": "-87.64620065689087",
+        "starttime": "2025-12-21T21:10:00.287Z",
+        "endtime": "2025-12-22T00:10:00.287Z",
+        "bring": "",
+        "deleted": false
+      }
+    ],
+    "image": "20250623_090144.jpg"
+  },
+  {
+    "name": "Saatvik",
+    "image": "",
+    "beachInfo": [
+      {
+        "description": "Going for a swim in the middle of the lake ",
+        "lat": "41.90656642333752",
+        "long": "-87.242431640625",
+        "starttime": "2025-07-18T06:01:18.959Z",
+        "endtime": "2025-07-18T16:01:18.959Z",
+        "bring": "Nothing ",
+        "deleted": false
+      }
+    ]
+  },
+  {
+    "name": "John Pork",
+    "image": "IMG_7120.jpeg",
+    "beachInfo": [
+      {
+        "description": "/",
+        "lat": "39.043580993862015",
+        "long": "125.74401855468751",
+        "starttime": "2025-07-21T05:00:40.289Z",
+        "endtime": "2025-07-21T06:00:40.289Z",
+        "bring": "matcha",
+        "deleted": false
+      }
+    ]
+  },
+  {
+    "name": "Diddy",
+    "image": "",
+    "beachInfo": [
+      {
+        "description": "Dih",
+        "lat": "41.852780039535205",
+        "long": "-87.70797729492188",
+        "starttime": "2025-07-21T07:33:36.384Z",
+        "endtime": "2025-07-22T07:33:36.384Z",
+        "bring": "Lube",
+        "deleted": false
+      }
+    ]
+  },
+  {
+    "name": "John’s party house",
+    "image": "",
+    "beachInfo": [
+      {
+        "description": "Come party w/ me, let’s get sus",
+        "lat": "41.91381688631094",
+        "long": "-87.6395943760872",
+        "starttime": "2025-07-21T07:36:44.864Z",
+        "endtime": "2025-07-23T07:36:44.864Z",
+        "bring": "Nudity",
+        "deleted": false
+      }
+    ]
+  }
+]
